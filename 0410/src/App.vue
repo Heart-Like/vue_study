@@ -5,7 +5,7 @@
       - {{ title }}
       - {{ count }}
     </h1>
-    <input type="text">
+    <input :value="count" @input="handleInput" type="text">
     <Son1></Son1>
     <hr>
     <Son2></Son2>
@@ -16,12 +16,12 @@
 import Son1 from './components/Son1.vue'
 import Son2 from './components/Son2.vue'
 import { mapState } from 'vuex'
-console.log(mapState(['count', 'title']))
+// console.log(mapState(['count', 'title']))
 
 export default {
   name: 'app',
   created () {
-    // console.log(this.$router)
+    // console.log(this.$router) // 没配
     console.log(this.$store.state.count)
   },
   computed: {
@@ -30,6 +30,14 @@ export default {
   data: function () {
     return {
 
+    }
+  },
+  methods: {
+    handleInput (e) {
+      // 1. 实时获取输入框的值
+      const num = +e.target.value
+      // 2. 提交mutation，调用mutation函数
+      this.$store.commit('changeCount', num)
     }
   },
   components: {
